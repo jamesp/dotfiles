@@ -1,0 +1,44 @@
+autodetach on
+startup_message off
+defutf8 on
+
+escape ^Jj
+#escape ``
+
+hardstatus alwayslastline
+vbell off
+defscrollback 6000 
+
+# make the output buffer large for (fast) xterms.
+termcapinfo xterm* OL=10000
+# tell screen that xterm can switch to dark background and has function
+# keys.
+termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+
+# special xterm hardstatus: use the window title.
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+
+# use the PgUp and PgDn keys to enter copy mode
+# and page through the window backlog:
+bindkey -k kP copy
+
+# Use the function keys F7 and F8
+# to cycle backwards/forwards in
+# the list of existing windows:
+bindkey -k k7 prev
+bindkey -k k8 next
+
+bind ',' prev
+bind '.' next
+bind ' ' windowlist -b 
+
+shelltitle "$ |bash"
+
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %d/%m %C%a "
+#caption always "%3n %t%? @%u%?%? [%h]%?"
+
+#shell "/bin/zsh"
+
+
