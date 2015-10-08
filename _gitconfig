@@ -1,0 +1,12 @@
+[user]
+	name = James Penn
+	email = james@jamespenn.co.uk
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	cp = cherry-pick
