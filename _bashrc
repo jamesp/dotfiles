@@ -1,0 +1,56 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# User specific aliases and functions
+export PS1='\[\033k\033\\\]\u@\h:\w\$ '
+
+alias ll='ls -ltrh'            # full detail list
+alias la='ls -a'               # list all including hidden files
+alias cds='cd /scratch/jp492'  # cd to my scratch directory
+alias subl=rmate
+
+export PATH=$PATH:~/bin
+
+
+
+
+if [[ `hostname -s` == 'emps-gv2' ]]; then
+    # setup specific to gv2
+
+    # load my preferred modules and a default python environment
+    module load intel/14.0.0 openmpi-intel \
+             netcdf-4.3.0-openmpi-intel python/anaconda
+    module list
+
+    function workon {
+    # Configure the environment to work on different models
+    if [[ $1 == 'dry' ]]
+    then
+        echo "Setting GFDL dry config"
+        export GFDL_WORK=/scratch/jp492/gfdl_work
+        export GFDL_DATA=/scratch/jp492/gfdl_data
+        export GFDL_BASE=/scratch/jp492/GFDLdryModel
+        alias cdgfd='cd $GFDL_BASE'
+        echo "GFDL Config:"
+        env | grep GFDL_
+    elif [[ $1 == 'moist' ]]
+    then
+        echo "Setting GFDL moist config"
+        export GFDL_WORK=/scratch/jp492/gfdl_work
+        export GFDL_DATA=/scratch/jp492/gfdl_data
+        export GFDL_BASE=/scratch/jp492/GFDLmoistModel
+        alias cdgfd='cd $GFDL_BASE'
+        echo "GFDL Config:"
+        env | grep GFDL_
+    else
+        # don't recognise the name...
+        # try and load a python environment?
+        source activate $1
+    fi
+    }
+fi  # end gv2-specific
+
