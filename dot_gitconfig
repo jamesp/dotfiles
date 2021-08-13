@@ -1,0 +1,28 @@
+[user]
+  name = James Penn
+  email = james@jamespenn.co.uk
+
+[core]
+  excludesfile = ~/.gitignore
+
+[merge]
+  log = true
+
+[alias]
+  diffc = diff --cached
+  st = status
+  lol = log --oneline
+  lg = log --oneline --graph --decorate
+  lall = log --graph --oneline --all
+  fu = fetch upstream
+  co = checkout
+  pr = "!f() {                                                                     \
+            PR=$1                                                          ;\
+            REMOTE=${2:-upstream}                                          ;\
+            git remote -v | grep $REMOTE | grep 'git@' >/dev/null          ;\
+            [ $? == 1 ] && REF=pull-requests/$PR/from || REF=pull/$PR/head ;\
+            git fetch -fu $REMOTE refs/$REF:pr/$PR                        &&\
+            git checkout pr/$PR                                            ;\
+            } ; f"
+[pull]
+	ff = only
