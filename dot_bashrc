@@ -12,3 +12,30 @@ fi
 export PATH=~/bin:$PATH
 export EDITOR="code -w"
 
+ # better history: https://blog.sanctum.geek.nz/better-bash-history/
+HISTFILESIZE=1000000
+HISTSIZE=1000000
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:bg:fg:history'
+HISTTIMEFORMAT='%F %T '
+shopt -s histappend
+shopt -s cmdhist
+# scroll less with the mouse
+export LESS=-R
+
+source ${HOME}/bin/source/git-prompt.sh
+source ${HOME}/bin/source/markjump.sh
+GIT_PS1_SHOWCOLORHINTS=1
+GIT_PS1_SHOWDIRTYSTATE=1
+export PROMPT_COMMAND='history -a;__git_ps1 "\u@\h:\W ${CONDA_PROMPT_MODIFIER}" "\\\$ "'
+
+alias u="micro"
+
+serve() {
+	python3 -m http.server --directory=${1:-.} ${2:-8080}
+}
+
+# print stderr in red
+stderr()(set -o pipefail;"$@" 2> >(sed $'s,.*,\e[31m&\e[m,'>&2))
+# echo to stderr
+errcho(){ >&2 echo $@; }
